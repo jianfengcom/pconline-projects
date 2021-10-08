@@ -1,0 +1,14 @@
+-- 参考
+check_url.jsp
+asdfgh:"abc" + new Date().getTime()
+
+-- 安卓
+http://192.168.242.77:8080/view.action?masterId=65433&nossi=true&preview=1&asdfgh=abc1620978677917
+判断前, 需要清 mc缓存, 404即已删除
+
+-- 终极杀招
+update dl_front_master set status = 0 where dl_master_id = 845121;
+status = 0 即已删除
+
+-- 日志 192.168.242.79
+/data/PRG/resin_pconline-dl/log/stderr.log
