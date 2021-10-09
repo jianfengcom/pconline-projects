@@ -1,0 +1,9 @@
+-- 接口
+local.pconline.com.cn:9991/intf/capture/getMallUrlInfo.jsp?url=https://npcitem.jd.hk/100010911361.html
+192.168.239.185:8003/intf/capture/getMallUrlInfo.jsp?url=https://npcitem.jd.hk/100010911361.html
+https://best.pconline.com.cn/intf/capture/getMallUrlInfo.jsp?url=https://npcitem.jd.hk/100010911361.html
+
+-- 账号
+https://www.dingdanxia.com/
+13433906245
+juchaozhi99
