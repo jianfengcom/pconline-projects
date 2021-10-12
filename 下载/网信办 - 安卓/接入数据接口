@@ -1,0 +1,6 @@
+
+localhost:9090/aoc/storeBasic.do
+localhost:9090/aoc/smallType.do?channelId=1461
+localhost:9090/aoc/info.do?masterId=367880
+localhost:9090/aoc/infoStatus.do?masterId=367880
+localhost:9090/aoc/developer.do?masterId=367880&developerId=15628
