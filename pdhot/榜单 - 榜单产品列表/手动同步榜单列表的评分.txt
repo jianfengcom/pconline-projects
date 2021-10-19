@@ -1,0 +1,9 @@
+-- 字段含义
+status:
+    2=临时下架
+
+UPDATE hot_rankItem SET commentScore = 4.3 WHERE rankListId = 1601 AND productId = 1371507;
+
+ID:1601的榜单
+产品ID    评分
+1371507   4.3
