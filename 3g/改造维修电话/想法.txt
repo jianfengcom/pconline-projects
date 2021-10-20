@@ -1,0 +1,34 @@
+--
+苹果
+国产手机
+笔记本
+地区
+
+
+--
+https://product.pconline.com.cn/repair/samsung/mobile/shenzhen.html
+大品牌
+小类
+地区 (城市, 省, 国家)
+
+
+-- 从链接出发
+品牌 + 城市
+品牌 + 省
+品牌 + 国家
+
+品牌, 小类
+多个地区
+List<Contact> 取其中一个联系方式
+
+安卓手机 : 小类ID 是 20937, 且 品牌ID不是 44299
+苹果 : 可以做到很细化
+
+
+
+-- SQL
+select t.PUB_DIR AS "大品牌英文名" , b.ID AS "大品牌ID" from PDL_PRODUCT_TYPE t, PDL_BIG_BRAND b where t.ID = b.S_BRAND_ID
+
+
+
+
