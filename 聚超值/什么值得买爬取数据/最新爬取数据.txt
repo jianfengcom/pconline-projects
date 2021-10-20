@@ -1,0 +1,23 @@
+SELECT * FROM pcbest_topic_extend WHERE updateAt >= '2021-10-15 16:17:18' order by updateAt desc;
+
+SELECT * FROM pcbest_topic WHERE updateAt >= '2021-10-15 16:17:18' order by updateAt desc;
+
+SELECT * FROM pcbest_topic WHERE topicId =
+
+
+================================= 爬虫 start =================================
+-爬取值得买京东爆料
+/task/spider.do?siteType=1&mallType=1
+-爬取值得买非京东爆料
+/task/spider.do?siteType=1&mallType=2
+
+
+-爬取值得买精选
+/task/spider.do?siteType=3
+
+select entryId from bs_crawl_entry where siteType = 3
+and status = 0
+order by entryId limit 1000
+
+select * from bs_crawl_log where siteType = 3 and createAt >= '2021-10-15 16:17:18' order by createAt desc;
+================================= 爬虫 end =================================
