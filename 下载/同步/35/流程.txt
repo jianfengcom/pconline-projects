@@ -1,0 +1,21 @@
+-- 简介
+爬取软件同步到ftp流程：
+	10.35机器从getNewApkLog.jsp这个接口(160机器)每15分钟获取数据，将/data1/devupload/web/apkdoanload下的软件cp到ftp服务器
+	ftp_ip="192.168.246.68 192.168.246.67"
+
+1. 故事的开始:执行脚本
+每10分钟执行一次脚本 /data1/sh/apk/wget_apk_file_and_sync_to_ftp-new-apk.sh
+通过160机器接口1, 获取数据并把数据保存到 url文件1
+把软件位置1 的软件cp到 备份位置1
+把备份位置1 的软件cp到 ftp位置1, 并把过程记录到日志位置1
+文件推送成功后, 调用接口2, 并将调用记录保存到日志位置2
+
+
+接口1: http://192.168.238.160:8080/intf/developer/getNewApkLog.jsp?minute=60&type=1&size=300
+url文件1: /data1/sh/apk/pc_file/pc_file_2021-10-21_10-30
+软件位置1: /data1/devupload/web/apkdoanload/1634721423752.apk
+备份位置1: /data1/sh/apk/backup_pc/202110/pconline1634721423752.apk
+ftp位置1: 67机器和68机器的/data1/ftp-new-apk.pconline.com.cn/pub/download/202110/pconline1634721423752.apk
+日志位置1: /data1/sh/apk/log/2021-10-21_12-30.log (每5分钟一个文件)
+接口2: http://192.168.238.160:8080/sync/apk/result.do?fileName=202110/1634721423752.apk
+日志位置2: /data1/sh/apk/log/curl.log

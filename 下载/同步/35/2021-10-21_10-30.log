@@ -1,0 +1,297 @@
+--2021-10-21 10:30:01--  http://192.168.238.160:8080/intf/developer/getNewApkLog.jsp?minute=60&type=1&size=300
+正在连接 192.168.238.160:8080... 已连接。
+已发出 HTTP 请求，正在等待回应... 200 OK
+长度：未指定 [text/html]
+正在保存至: “/data1/sh/apk/pc_file/pc_file_2021-10-21_10-30”
+
+     0K                                                        43.5M=0s
+
+2021-10-21 10:30:03 (43.5 MB/s) - “/data1/sh/apk/pc_file/pc_file_2021-10-21_10-30” 已保存 [275]
+
+sending incremental file list
+pconline1634721423752.apk
+       32768   0%    0.00kB/s    0:00:00
+    12124160  11%   11.53MB/s    0:00:07
+    23986176  23%   11.43MB/s    0:00:06
+    35782656  35%   11.36MB/s    0:00:05
+    47644672  46%   11.35MB/s    0:00:04
+    58785792  57%   11.12MB/s    0:00:03
+    70582272  69%   11.10MB/s    0:00:02
+    82542592  81%   11.14MB/s    0:00:01
+    94863360  93%   11.25MB/s    0:00:00
+   101891343 100%   11.42MB/s    0:00:08 (xfer#1, to-check=0/1)
+
+sent 98643594 bytes  received 27 bytes  10383539.05 bytes/sec
+total size is 101891343  speedup is 1.03
+sending incremental file list
+pconline1634721423752.apk
+       32768   0%    0.00kB/s    0:00:00
+    12288000  12%   11.69MB/s    0:00:07
+    24018944  23%   11.44MB/s    0:00:06
+    35848192  35%   11.39MB/s    0:00:05
+    47284224  46%   11.26MB/s    0:00:04
+    57999360  56%   10.90MB/s    0:00:03
+    69828608  68%   10.91MB/s    0:00:02
+    81756160  80%   10.94MB/s    0:00:01
+    93880320  92%   11.10MB/s    0:00:00
+   101891343 100%   11.24MB/s    0:00:08 (xfer#1, to-check=0/1)
+
+sent 98643594 bytes  received 27 bytes  10383539.05 bytes/sec
+total size is 101891343  speedup is 1.03
+sending incremental file list
+pconline1634721393179.apk
+       32768   0%    0.00kB/s    0:00:00
+     9895936   9%    9.41MB/s    0:00:09
+    21528576  21%   10.24MB/s    0:00:07
+    30834688  30%    9.77MB/s    0:00:07
+    40599552  39%    9.65MB/s    0:00:06
+    52592640  51%   10.16MB/s    0:00:04
+    64946176  63%   10.33MB/s    0:00:03
+    77201408  75%   11.04MB/s    0:00:02
+    89161728  87%   11.57MB/s    0:00:01
+   101613568  99%   11.68MB/s    0:00:00
+   102482639 100%   10.79MB/s    0:00:09 (xfer#1, to-check=0/1)
+
+sent 97786465 bytes  received 27 bytes  9312999.24 bytes/sec
+total size is 102482639  speedup is 1.05
+sending incremental file list
+pconline1634721393179.apk
+       32768   0%    0.00kB/s    0:00:00
+    11829248  11%   11.25MB/s    0:00:07
+    23298048  22%   11.09MB/s    0:00:06
+    34799616  33%   11.05MB/s    0:00:05
+    45514752  44%   10.84MB/s    0:00:05
+    53903360  52%   10.03MB/s    0:00:04
+    63078400  61%    9.48MB/s    0:00:04
+    70352896  68%    8.47MB/s    0:00:03
+    73367552  71%    6.64MB/s    0:00:04
+    80445440  78%    6.32MB/s    0:00:03
+    86900736  84%    5.67MB/s    0:00:02
+    91160576  88%    4.95MB/s    0:00:02
+    97878016  95%    5.82MB/s    0:00:00
+   102482639 100%    7.70MB/s    0:00:12 (xfer#1, to-check=0/1)
+
+sent 97786465 bytes  received 27 bytes  7243443.85 bytes/sec
+total size is 102482639  speedup is 1.05
+sending incremental file list
+pconline1634721363703.apk
+       32768   0%    0.00kB/s    0:00:00
+    12550144  10%   11.94MB/s    0:00:08
+    24477696  20%   11.64MB/s    0:00:07
+    35651584  30%   11.32MB/s    0:00:07
+    46497792  39%   11.08MB/s    0:00:06
+    58195968  49%   10.88MB/s    0:00:05
+    70057984  59%   10.87MB/s    0:00:04
+    81166336  69%   10.85MB/s    0:00:03
+    91881472  78%   10.81MB/s    0:00:02
+   102793216  87%   10.62MB/s    0:00:01
+   115965952  98%   10.93MB/s    0:00:00
+   117359870 100%   11.06MB/s    0:00:10 (xfer#1, to-check=0/1)
+
+sent 109325028 bytes  received 27 bytes  9506526.52 bytes/sec
+total size is 117359870  speedup is 1.07
+sending incremental file list
+pconline1634721363703.apk
+       32768   0%    0.00kB/s    0:00:00
+     9764864   8%    9.27MB/s    0:00:11
+    15695872  13%    7.47MB/s    0:00:13
+    20217856  17%    6.40MB/s    0:00:14
+    23691264  20%    5.62MB/s    0:00:16
+    27820032  23%    4.29MB/s    0:00:20
+    29949952  25%    3.38MB/s    0:00:25
+    33816576  28%    3.22MB/s    0:00:25
+    38240256  32%    3.45MB/s    0:00:22
+    42958848  36%    3.59MB/s    0:00:20
+    47677440  40%    4.21MB/s    0:00:16
+    52527104  44%    4.44MB/s    0:00:14
+    61046784  52%    5.41MB/s    0:00:10
+    71794688  61%    6.86MB/s    0:00:06
+    80805888  68%    7.88MB/s    0:00:04
+    91914240  78%    9.39MB/s    0:00:02
+    97124352  82%    8.59MB/s    0:00:02
+    99516416  84%    6.59MB/s    0:00:02
+   102334464  87%    5.11MB/s    0:00:02
+   108232704  92%    3.88MB/s    0:00:02
+   117359870 100%    5.61MB/s    0:00:19 (xfer#1, to-check=0/1)
+
+sent 109325028 bytes  received 27 bytes  5332929.51 bytes/sec
+total size is 117359870  speedup is 1.07
+sending incremental file list
+pconline1634721324352.apk
+       32768   0%    0.00kB/s    0:00:00
+     9437184  14%    8.97MB/s    0:00:06
+    21168128  32%   10.08MB/s    0:00:04
+    31850496  48%   10.12MB/s    0:00:03
+    38731776  58%    9.23MB/s    0:00:02
+    41549824  63%    7.63MB/s    0:00:03
+    45580288  69%    5.80MB/s    0:00:03
+    56623104  86%    5.88MB/s    0:00:01
+    65814809 100%    8.13MB/s    0:00:07 (xfer#1, to-check=0/1)
+
+sent 63366769 bytes  received 27 bytes  8448906.13 bytes/sec
+total size is 65814809  speedup is 1.04
+sending incremental file list
+pconline1634721324352.apk
+       32768   0%    0.00kB/s    0:00:00
+     7503872  11%    7.06MB/s    0:00:08
+    11468800  17%    5.43MB/s    0:00:09
+    15400960  23%    4.87MB/s    0:00:10
+    23396352  35%    5.55MB/s    0:00:07
+    32768000  49%    6.02MB/s    0:00:05
+    39485440  59%    6.66MB/s    0:00:03
+    43024384  65%    6.55MB/s    0:00:03
+    45121536  68%    5.16MB/s    0:00:03
+    51183616  77%    4.37MB/s    0:00:03
+    59179008  89%    4.67MB/s    0:00:01
+    65814809 100%    5.69MB/s    0:00:11 (xfer#1, to-check=0/1)
+
+sent 63366769 bytes  received 27 bytes  5069343.68 bytes/sec
+total size is 65814809  speedup is 1.04
+sending incremental file list
+pconline1634721302046.apk
+       32768   0%    0.00kB/s    0:00:00
+     9961472  20%    9.47MB/s    0:00:04
+    21757952  44%   10.36MB/s    0:00:02
+    34078720  69%   10.83MB/s    0:00:01
+    46497792  94%   11.08MB/s    0:00:00
+    49313350 100%   11.30MB/s    0:00:04 (xfer#1, to-check=0/1)
+
+sent 45681709 bytes  received 27 bytes  10151496.89 bytes/sec
+total size is 49313350  speedup is 1.08
+sending incremental file list
+pconline1634721302046.apk
+       32768   0%    0.00kB/s    0:00:00
+    12320768  24%   11.71MB/s    0:00:03
+    24150016  48%   11.49MB/s    0:00:02
+    36306944  73%   11.52MB/s    0:00:01
+    48726016  98%   11.60MB/s    0:00:00
+    49313350 100%   11.66MB/s    0:00:04 (xfer#1, to-check=0/1)
+
+sent 45681709 bytes  received 27 bytes  10151496.89 bytes/sec
+total size is 49313350  speedup is 1.08
+sending incremental file list
+pconline1634721278143.apk
+       32768   0%    0.00kB/s    0:00:00
+    12353536  21%   11.75MB/s    0:00:03
+    24150016  41%   11.50MB/s    0:00:02
+    36012032  61%   11.43MB/s    0:00:01
+    47906816  81%   11.41MB/s    0:00:00
+    58753730 100%   11.60MB/s    0:00:04 (xfer#1, to-check=0/1)
+
+sent 55570276 bytes  received 27 bytes  10103691.45 bytes/sec
+total size is 58753730  speedup is 1.06
+sending incremental file list
+pconline1634721278143.apk
+       32768   0%    0.00kB/s    0:00:00
+    12091392  20%   11.49MB/s    0:00:03
+    23363584  39%   11.11MB/s    0:00:03
+    32964608  56%   10.45MB/s    0:00:02
+    37781504  64%    8.99MB/s    0:00:02
+    42532864  72%    7.24MB/s    0:00:02
+    48562176  82%    5.99MB/s    0:00:01
+    58753730 100%    8.25MB/s    0:00:06 (xfer#1, to-check=0/1)
+
+sent 55570276 bytes  received 27 bytes  7409373.73 bytes/sec
+total size is 58753730  speedup is 1.06
+sending incremental file list
+pconline1634721250891.apk
+       32768   0%    0.00kB/s    0:00:00
+    12288000  18%   11.69MB/s    0:00:04
+    23822336  35%   11.34MB/s    0:00:03
+    35913728  54%   11.40MB/s    0:00:02
+    47841280  72%   11.39MB/s    0:00:01
+    59637760  90%   11.28MB/s    0:00:00
+    66201145 100%   11.45MB/s    0:00:05 (xfer#1, to-check=0/1)
+
+sent 63966756 bytes  received 27 bytes  9841043.54 bytes/sec
+total size is 66201145  speedup is 1.03
+sending incremental file list
+pconline1634721250891.apk
+       32768   0%    0.00kB/s    0:00:00
+    12124160  18%   11.53MB/s    0:00:04
+    23658496  35%   11.27MB/s    0:00:03
+    35618816  53%   11.31MB/s    0:00:02
+    47316992  71%   11.27MB/s    0:00:01
+    59015168  89%   11.18MB/s    0:00:00
+    66201145 100%   11.23MB/s    0:00:05 (xfer#1, to-check=0/1)
+
+sent 63966756 bytes  received 27 bytes  11630324.18 bytes/sec
+total size is 66201145  speedup is 1.03
+sending incremental file list
+pconline1634721237830.apk
+       32768   0%    0.00kB/s    0:00:00
+     3600955 100%   11.73MB/s    0:00:00 (xfer#1, to-check=0/1)
+
+sent 3268236 bytes  received 27 bytes  6536526.00 bytes/sec
+total size is 3600955  speedup is 1.10
+sending incremental file list
+pconline1634721237830.apk
+       32768   0%    0.00kB/s    0:00:00
+     3600955 100%   13.09MB/s    0:00:00 (xfer#1, to-check=0/1)
+
+sent 3268236 bytes  received 27 bytes  6536526.00 bytes/sec
+total size is 3600955  speedup is 1.10
+sending incremental file list
+pconline1634721028327.apk
+       32768   0%    0.00kB/s    0:00:00
+    12320768  19%   11.71MB/s    0:00:04
+    24182784  38%   11.50MB/s    0:00:03
+    36634624  59%   11.63MB/s    0:00:02
+    49676288  80%   11.83MB/s    0:00:01
+    61440000  98%   11.71MB/s    0:00:00
+    62081310 100%   11.74MB/s    0:00:05 (xfer#1, to-check=0/1)
+
+sent 58510382 bytes  received 27 bytes  10638256.18 bytes/sec
+total size is 62081310  speedup is 1.06
+sending incremental file list
+pconline1634721028327.apk
+       32768   0%    0.00kB/s    0:00:00
+    12320768  19%   11.71MB/s    0:00:04
+    23855104  38%   11.35MB/s    0:00:03
+    35356672  56%   11.22MB/s    0:00:02
+    48529408  78%   11.55MB/s    0:00:01
+    58392576  94%   10.98MB/s    0:00:00
+    62081310 100%   11.11MB/s    0:00:05 (xfer#1, to-check=0/1)
+
+sent 58510382 bytes  received 27 bytes  10638256.18 bytes/sec
+total size is 62081310  speedup is 1.06
+sending incremental file list
+pconline1634721009757.apk
+       32768   0%    0.00kB/s    0:00:00
+    12386304  30%   11.77MB/s    0:00:02
+    24510464  61%   11.66MB/s    0:00:01
+    36864000  91%   11.70MB/s    0:00:00
+    40144346 100%   11.82MB/s    0:00:03 (xfer#1, to-check=0/1)
+
+sent 37122825 bytes  received 27 bytes  8249522.67 bytes/sec
+total size is 40144346  speedup is 1.08
+sending incremental file list
+pconline1634721009757.apk
+       32768   0%    0.00kB/s    0:00:00
+    10289152  25%    9.78MB/s    0:00:02
+    22478848  55%   10.70MB/s    0:00:01
+    34701312  86%   11.02MB/s    0:00:00
+    40144346 100%   11.24MB/s    0:00:03 (xfer#1, to-check=0/1)
+
+sent 37122825 bytes  received 27 bytes  10606529.14 bytes/sec
+total size is 40144346  speedup is 1.08
+sending incremental file list
+pconline1634728735453.apk
+       32768   0%    0.00kB/s    0:00:00
+    12451840  32%   11.84MB/s    0:00:02
+    23330816  60%   11.11MB/s    0:00:01
+    35487744  91%   11.27MB/s    0:00:00
+    38785306 100%   11.40MB/s    0:00:03 (xfer#1, to-check=0/1)
+
+sent 37155564 bytes  received 27 bytes  10615883.14 bytes/sec
+total size is 38785306  speedup is 1.04
+sending incremental file list
+pconline1634728735453.apk
+       32768   0%    0.00kB/s    0:00:00
+    12353536  31%   11.74MB/s    0:00:02
+    24150016  62%   11.49MB/s    0:00:01
+    35061760  90%   11.13MB/s    0:00:00
+    38785306 100%   10.98MB/s    0:00:03 (xfer#1, to-check=0/1)
+
+sent 37155564 bytes  received 27 bytes  8256798.00 bytes/sec
+total size is 38785306  speedup is 1.04
