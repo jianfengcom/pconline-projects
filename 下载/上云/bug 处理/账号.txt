@@ -1,0 +1,22 @@
+
+管理监控平台
+https://homenew.console.aliyun.com/home/dashboard/ResourceDashboard
+pcgroup2020/pcgroup2020123
+
+数据库管理
+https://dms.aliyun.com/?spm=5176.19908290.0.0.611f1450MbPxHs&regionId=cn-shenzhen&dbType=mysql&instanceId=rm-wz9qh23lah57u56ms&instanceSource=RDS
+dl_readonly/DL_readonly
+
+MC缓存管理
+https://kvstore.console.aliyun.com/Memcache/instance/cn-shenzhen
+
+ECS实例管理【tengine hcs resin k8s vpn tunnel(ats)】
+https://ecs.console.aliyun.com/?spm=5176.22426017.top-nav.dbutton.32ac54d1Gut9T3#/server/region/cn-shenzhen
+
+
+-- 机器登录
+root/pc_online21
+
+
+-- 超级管理员
+jzc55%%0210

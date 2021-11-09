@@ -1,0 +1,8 @@
+120.25.213.10 dlc2.pconline.com.cn
+120.24.5.43  dl.pconline.com.cn
+47.107.84.51 newplay.pconline.com.cn
+47.106.99.89 g.pconline.com.cn
+
+223.215.189.139 ftp.pconline.com.cn
+223.215.189.139 ftp-idc.pconline.com.cn
+223.215.189.139 ftp-apk.pconline.com.cn

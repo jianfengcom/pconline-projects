@@ -1,0 +1,33 @@
+    /**
+     * 数据接入 - 返回json
+     */
+    public static <T> JSONObject buildDownloadJson(String msgVersion, String msgType, String num, T t) {
+        JSONObject result = new JSONObject();
+        result.put("cmd_id", msgVersion); // 业务前缀+“_”+14位时间格式+“_”+唯一标识（5位）
+        result.put("cmd_type", "query");
+        result.put("total_pushed_num", num);
+
+        JSONObject obj = JSON.parseObject(JSON.toJSONString(t, SerializerFeature.WriteNullListAsEmpty));
+        JSONArray arr = new JSONArray();
+        arr.add(obj);
+
+        result.put("record_list", arr);
+        return result;
+    }
+
+
+    public static void main(String[] args) {
+            String url = "http://localhost:8080/dl/get2?masterId=65433";
+            CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+            HttpGet httpGet = new HttpGet(url);
+            try {
+                CloseableHttpResponse response = httpClient.execute(httpGet);
+
+                System.out.println("code:" + response.getStatusLine().getStatusCode());
+                byte[] bytes = EntityUtils.toByteArray(response.getEntity());
+                ByteToFileUtil.getFile(bytes, "/data", "cn.com.pconline.android.browser_6.3.7.0.apk");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+     }

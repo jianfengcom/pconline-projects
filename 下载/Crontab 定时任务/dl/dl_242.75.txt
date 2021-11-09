@@ -1,0 +1,30 @@
+1---2 * * * * /home/Agent/sbin/resin_logcal.py >/dev/null 2>&1
+2---
+3---
+4---
+5---
+6---
+7---
+8---
+9---
+10---
+11---###global_ssi
+12---39 * * * * /var/PROGRAM/MANAGEMENT/modules/xbash/xglobalssi.sh sync >/dev/null 2>&1
+13---
+14---* * * * * /home/Agent/sbin/cron_init.sh >/dev/null 2>&1
+15---
+16---# MONITOR IV
+17---* * * * * /var/PROGRAM/MANAGEMENT/bin/monitor.sh >& /tmp/.monitor.log
+18---
+19---
+20---
+21---
+22---##### PERFORMANCE MONITOR 3.8.9
+23---*/5 * * * * /var/PROGRAM/perf_mon/monitor.sh >/dev/null 2>&1
+24---
+25---57 * * * * /data/LOG/tengine_pconline-dl/logs/tmp/wtohafs.sh > /dev/null 2>&1
+26---
+27---1 1 * * 1 /bin/bash /home/support/clear_log.sh > /dev/null 2>&1
+28---
+29---3 3 * * *  find  /data/LOG/resin_pconline-dl/log   -type  f  -mtime  +1|xargs rm -f  > /dev/null 2>&1
+30---3 3 * * *  find  /data/PRG/resin_pconline-dl/log   -type  f  -mtime  +1|xargs rm -f  > /dev/null 2>&1

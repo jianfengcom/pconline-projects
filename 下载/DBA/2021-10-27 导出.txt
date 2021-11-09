@@ -1,0 +1,5 @@
+
+SELECT info.dl_master_id ID, info.name 软件名称, info.alias 副标题, CONCAT(info.intro, d.content) 简介 FROM dl_master_info info join dl_desc d on
+ info.dl_master_id = d.dl_master_id
+ where info.status = 1
+ and d.sort = 0

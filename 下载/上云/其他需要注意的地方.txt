@@ -1,0 +1,6 @@
+sys.sync_baidu_alading_sh=/data/sh/realtime_baidu_xml.sh
+
+
+--
+192.168.11.254:8080
+local.pconline.com.cn

@@ -1,0 +1,27 @@
+-- 查看机器上部署的java项目的端口
+netstat -nlp|grep java
+
+
+-- 查看机器上部署的项目列表 (idc 特有)
+ipdrop
+
+
+-- 安装 sz rz 命令
+yum install lrzsz
+
+
+-- 列出目前的时程表
+crontab -l
+
+
+-- 重启 resin
+/etc/init.d/resind_pconline-wapdl restart
+
+
+-- 端口
+netstat -nlpt
+
+
+--
+telnet
+

@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/jee 
+		http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+   
+	<jee:jndi-lookup id="appName" jndi-name="java:comp/env/app-name" />
+
+	<!-- update201704 begin -->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>file:/data/pc-config/pcdlc_envirement.properties</value>
+				<value>file:/data/pc-config/passport.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!-- update201704 end -->
+
+	<!-- search begin -->
+    <bean id="solrConfig" class="cn.pconline.search.common.util.Config">
+        <constructor-arg value="/data/pc-config/pcdlc_envirement.properties"/>
+    </bean>
+    <bean id="solrSearcher" class="cn.pconline.search.common.SolrSearcher">
+        <constructor-arg value="#{@solrConfig}"/>
+    </bean>
+    <!-- search end -->
+	
+	 <!-- SpringCtxUtils -->
+	 <bean class="cn.pconline.pcdlc.util.SpringCtxUtils"/>
+
+	
+	<!--############## Druid DataSource、Spring config begin  (add by Mike He 20180429)##############-->
+	<!-- <jee:jndi-lookup id="dataSource" jndi-name="jdbc/mysqlDownload" /> old -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close"> 
+    	<!-- 基本属性 url、user、password -->
+	    <property name="url" value="${mysql.connectionUrl}" />
+	    <property name="username" value="${mysql.user}" />
+	    <property name="password" value="${mysql.password}" />
+	
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize" value="1" />
+		<property name="minIdle" value="1" />
+	    <property name="maxActive" value="20" />
+	    
+	    <!-- 配置获取连接等待超时的时间 -->
+	    <property name="maxWait" value="60000" />
+	
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+	    <property name="timeBetweenEvictionRunsMillis" value="60000" />
+	    <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+	    <property name="minEvictableIdleTimeMillis" value="300000" />
+	
+	    <property name="testWhileIdle" value="true" />
+	    <property name="testOnBorrow" value="false" />
+	    <property name="testOnReturn" value="false" />
+	
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+	    <property name="poolPreparedStatements" value="true" />
+	    <property name="maxOpenPreparedStatements" value="20" />
+	    
+	    <!-- 配置监控统计拦截的filters -->
+	    <!-- <property name="filters" value="stat" /> -->
+	    <property name="proxyFilters">
+			<list>
+				<ref bean="stat-filter" />
+			</list>
+		</property>
+	    
+	    <!-- 直接关闭这个   自动回收超时连接 add20180122 -->
+        <property name="removeAbandoned" value="false" />
+ 	</bean>
+
+	<bean id="druid-stat-interceptor"
+	  	class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor">
+	  </bean>
+	
+	<bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut"
+		scope="prototype">
+		<property name="patterns">
+			<list>
+				<value>cn.pconline.pcdlc.service.*</value>
+			</list>
+		</property>
+	</bean>
+	
+	<aop:config>
+		<aop:advisor advice-ref="druid-stat-interceptor"
+			pointcut-ref="druid-stat-pointcut" />
+	</aop:config>
+	
+	<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+		<property name="slowSqlMillis" value="3000" />
+		<property name="logSlowSql" value="true" />
+	</bean>
+	<!--############## Druid DataSource、Spring config end ##############-->
+ 	
+	
+	<bean id="jsonClient" class="cn.pc.util.JsonClient" />
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"
+		p:dataSource-ref="dataSource" />
+	<bean id="simpleJdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+		<constructor-arg type="org.springframework.jdbc.core.JdbcOperations"
+			ref="jdbcTemplate" />
+	</bean>
+
+	<bean id="idGenerator" class="org.gelivable.dao.IdGeneratorByTable"
+		p:idDataSource-ref="dataSource" />
+
+	<bean id="geliOrm" class="org.gelivable.dao.GeliOrm">
+		<constructor-arg value="" />
+		<property name="entityList">
+			<list>
+				<value>cn.pconline.pcdlc.entity.SortDraft</value> 
+				<value>cn.pconline.pcdlc.entity.ClientMasterVRLog</value> 
+				<value>cn.pconline.pcdlc.entity.ClientMasterSpiderApp</value>
+				<value>cn.pconline.pcdlc.entity.MonitorUpdate</value>
+				<value>cn.pconline.pcdlc.entity.SortMapping</value>
+				<value>cn.pconline.pcdlc.entity.ClientMasterSpider</value>
+				<value>cn.pconline.pcdlc.entity.MasterCheckUrl</value>
+				<value>cn.pconline.pcdlc.entity.CaCUnReport</value>
+				<value>cn.pconline.pcdlc.entity.CaCPushResult</value>
+				<value>cn.pconline.pcdlc.entity.CaCPushResultDetail</value>
+				<value>cn.pconline.pcdlc.entity.ClientMasterSpiderBlack</value>
+				<value>cn.pconline.pcdlc.entity.SoftRedirect1</value> 
+				<value>cn.pconline.pcdlc.entity.ShieldingAd</value>
+				<value>cn.pconline.pcdlc.entity.UserSearch</value>
+				<value>cn.pconline.pcdlc.entity.HistoryVersion</value>
+				<value>cn.pconline.pcdlc.entity.ClientMasterAppLog</value>
+				<value>cn.pconline.pcdlc.entity.MasterMaterialPic</value>
+				<value>cn.pconline.pcdlc.entity.ClientMasterPic</value>
+				<value>cn.pconline.pcdlc.entity.ClientMasterAppLog</value>
+				<value>cn.pconline.pcdlc.entity.ClientMasterAppExt</value>
+				<value>cn.pconline.pcdlc.entity.ClientMaster2</value>
+				<value>cn.pconline.pcdlc.entity.DlDeveloper</value>
+				<value>cn.pconline.pcdlc.entity.Channel</value>
+				<value>cn.pconline.pcdlc.entity.ChannelTemplate</value>
+				<value>cn.pconline.pcdlc.entity.ClientMaster</value>
+				<value>cn.pconline.pcdlc.entity.FrontMaster</value>
+				<value>cn.pconline.pcdlc.entity.MasterInfo</value>
+				<value>cn.pconline.pcdlc.entity.MasterDesc</value>
+				<value>cn.pconline.pcdlc.entity.MasterDescExt</value>
+				<value>cn.pconline.pcdlc.entity.MasterLink</value>
+				<value>cn.pconline.pcdlc.entity.MasterAppExt</value>
+				<value>cn.pconline.pcdlc.entity.DailyCount</value>
+				<value>cn.pconline.pcdlc.entity.DailyFromCount</value>
+				<value>cn.pconline.pcdlc.entity.MasterKeyword</value>
+				<value>cn.pconline.pcdlc.entity.MasterLog</value>
+				<value>cn.pconline.pcdlc.entity.MasterPic</value>
+				<value>cn.pconline.pcdlc.entity.FocusImg</value>
+				<value>cn.pconline.pcdlc.entity.GenerateFile</value>
+				<value>cn.pconline.pcdlc.entity.CommonAttribute</value>
+				<value>cn.pconline.pcdlc.entity.AttributeItem</value>
+				<value>cn.pconline.pcdlc.entity.QueryAttribute</value>
+				<value>cn.pconline.pcdlc.entity.ShieldingMaster</value>
+				<value>cn.pconline.pcdlc.auth.Acl</value>
+				<value>cn.pconline.pcdlc.auth.Function</value>
+				<value>cn.pconline.pcdlc.auth.Role</value>
+				<value>cn.pconline.rescenter.entity.Brand</value>
+				<value>cn.pconline.rescenter.entity.Product</value>
+				<value>cn.pconline.pcdlc.entity.DailyAvgCount</value>
+				<value>cn.pconline.pcdlc.entity.AttributeItemCatalog</value>
+                <value>cn.pconline.pcdlc.entity.SoftRelation</value>
+                <value>cn.pconline.pcdlc.entity.NewKey</value>
+                <value>cn.pconline.pcdlc.entity.ChannelRelation</value>
+				<value>cn.pconline.pcdlc.entity.MasterTimeLink</value>
+				<value>cn.pconline.pcdlc.entity.MasterThumbPic</value>
+				<value>cn.pconline.pcdlc.entity.MasterHuiLiuPic</value>
+				<value>cn.pconline.pcdlc.entity.SoftRedirect</value>
+				<value>cn.pconline.pcdlc.entity.SoftFrontRedirect</value>
+				<value>cn.pconline.pcdlc.entity.MasterBlack</value>
+				<value>cn.pconline.pcdlc.entity.DlLog</value>
+				<value>cn.pconline.pcdlc.entity.MasterDeleteInfo</value>
+				<value>cn.pconline.pcdlc.entity.FriendShipLink</value>
+				<value>cn.pconline.pcdlc.entity.ClientMasterSpiderBlack</value>
+				<value>cn.pconline.pcdlc.entity.MasterUser</value>
+				<value>cn.pconline.pcdlc.entity.ClientMasterSpiderUrl</value>
+				<value>cn.pconline.pcdlc.entity.NeedDeletePic</value>
+				<value>cn.pconline.pcdlc.entity.MasterAppleId</value>
+				<value>cn.pconline.pcdlc.entity.RelateDownArticle</value>
+				<value>cn.pconline.pcdlc.entity.MasterRedirect</value>
+				<value>cn.pconline.pcdlc.entity.ClientMasterDesc</value>
+				<value>cn.pconline.pcdlc.entity.MasterInfoIos</value>
+				<value>cn.pconline.pcdlc.entity.MasterInfoMiniApp</value>
+				<value>cn.pconline.pcdlc.entity.MasterInfoSoft</value>
+				<value>cn.pconline.pcdlc.entity.MasterInfoAndroid</value>
+				<value>cn.pconline.pcdlc.entity.MasterInfoSymbian</value>
+				<value>cn.pconline.pcdlc.entity.MasterInfoDriver</value>
+				<value>cn.pconline.pcdlc.entity.MasterInfoVr</value>
+				<value>cn.pconline.pcdlc.entity.MasterInfoWp</value>
+				<value>cn.pconline.pcdlc.entity.MasterSafetyReport</value>
+				<value>cn.pconline.pcdlc.entity.DictionaryIndex</value>
+				<value>cn.pconline.pcdlc.entity.DictionaryItem</value>
+				<value>cn.pconline.pcdlc.entity.BaiduSearchWord</value>
+				<value>cn.pconline.pcdlc.entity.SeoKeyword</value>
+				<value>cn.pconline.pcdlc.entity.DetailedLog</value>
+				<value>cn.pconline.pcdlc.entity.MasterInfoDnb</value>
+				<value>cn.pconline.pcdlc.entity.ClientMasterSpiderDnb</value>
+				<value>cn.pconline.pcdlc.entity.MasterDnbExt</value>
+				<value>cn.pconline.pcdlc.entity.XzPushData</value>
+				<value>cn.pconline.pcdlc.entity.XzBatch</value>
+				<value>cn.pconline.pcdlc.entity.MasterLabelRelation</value>
+				<value>cn.pconline.pcdlc.entity.MasterLabel</value>
+				<value>cn.pconline.pcdlc.entity.MasterInfoWatcher</value>
+				<value>cn.pconline.pcdlc.entity.SoftRelationV2</value>
+				<value>cn.pconline.pcdlc.entity.LinkWord</value>
+				<value>cn.pconline.pcdlc.entity.PassportUser</value>
+            </list>
+		</property>
+	</bean>
+	 
+	<!-- 联通 mc -->
+	<bean id="cncSockIOPool" class="com.danga.MemCached.SockIOPool"
+		factory-method="getInstance" init-method="initialize" destroy-method="shutDown"
+		p:initConn="${cnc.memcached.initConn}" p:minConn="${cnc.memcached.minConn}"
+		p:maxConn="${cnc.memcached.maxConn}" p:maintSleep="${cnc.memcached.maintSleep}"
+		p:nagle="${cnc.memcached.nagle}" p:socketTO="${cnc.memcached.socketTO}"
+		p:servers="${cnc.memcached.servers}">
+		<constructor-arg value="pcdlc_cnc" />
+	</bean>
+
+	<bean id="cncMemCachedClient" class="com.danga.MemCached.MemCachedClient">
+		<property name="sanitizeKeys" value="false" />
+		<constructor-arg value="pcdlc_cnc" />
+	</bean>
+	<!-- 联通 mc -->
+	
+	<!-- 旁路缓存mc电信 -->
+	<bean id="linkSockIOPool" class="com.danga.MemCached.SockIOPool"
+		factory-method="getInstance" init-method="initialize" destroy-method="shutDown"
+		p:initConn="${link.memcached.initConn}" p:minConn="${link.memcached.minConn}"
+		p:maxConn="${link.memcached.maxConn}" p:maintSleep="${link.memcached.maintSleep}"
+		p:nagle="${link.memcached.nagle}" p:socketTO="${link.memcached.socketTO}"
+		p:servers="${link.memcached.servers}">
+		<constructor-arg value="pcdlc_link" />
+	</bean>
+
+	<bean id="linkMemCachedClient" class="com.danga.MemCached.MemCachedClient">
+		<property name="sanitizeKeys" value="false" />
+		<constructor-arg value="pcdlc_link" />
+	</bean>
+	<!-- 旁路缓存mc -->
+	
+	<!-- 旁路缓存mc 联通-->
+	<bean id="cnclinkSockIOPool" class="com.danga.MemCached.SockIOPool"
+		factory-method="getInstance" init-method="initialize" destroy-method="shutDown"
+		p:initConn="${cnc.link.memcached.initConn}" p:minConn="${cnc.link.memcached.minConn}"
+		p:maxConn="${cnc.link.memcached.maxConn}" p:maintSleep="${cnc.link.memcached.maintSleep}"
+		p:nagle="${cnc.link.memcached.nagle}" p:socketTO="${cnc.link.memcached.socketTO}"
+		p:servers="${cnc.link.memcached.servers}">
+		<constructor-arg value="pcdlc_link_cnc" />
+	</bean>
+
+	<bean id="cnclinkMemCachedClient" class="com.danga.MemCached.MemCachedClient">
+		<property name="sanitizeKeys" value="false" />
+		<constructor-arg value="pcdlc_link_cnc" />
+	</bean>
+	<!-- 旁路缓存mc 联通-->
+	
+	
+	<!-- 应用mc -->
+	<bean id="sockIOPool" class="com.danga.MemCached.SockIOPool"
+		factory-method="getInstance" init-method="initialize" destroy-method="shutDown"
+		p:initConn="${memcached.initConn}" p:minConn="${memcached.minConn}"
+		p:maxConn="${memcached.maxConn}" p:maintSleep="${memcached.maintSleep}"
+		p:nagle="${memcached.nagle}" p:socketTO="${memcached.socketTO}"
+		p:servers="${memcached.servers}">
+		<constructor-arg value="pcdlc" />
+	</bean>
+	
+	
+	<!-- 应对爬虫的mc Start-->
+	<bean id="spiderSockIOPool" class="com.danga.MemCached.SockIOPool"
+		factory-method="getInstance" init-method="initialize" destroy-method="shutDown"
+		p:initConn="${spider.memcached.initConn}" p:minConn="${spider.memcached.minConn}"
+		p:maxConn="${spider.memcached.maxConn}" p:maintSleep="${spider.memcached.maintSleep}"
+		p:nagle="${spider.memcached.nagle}" p:socketTO="${spider.memcached.socketTO}"
+		p:servers="${spider.memcached.servers}">
+		<constructor-arg value="pcdlc_spider" />
+	</bean>
+	<bean id="spiderMemCachedClient" class="com.danga.MemCached.MemCachedClient">
+		<property name="sanitizeKeys" value="false" />
+		<constructor-arg value="pcdlc_spider" />
+	</bean>
+	<!-- 应对爬虫的mc End -->
+
+	<bean id="memCachedClient4Geli" class="com.danga.MemCached.MemCachedClient">
+		<property name="sanitizeKeys" value="false" />
+		<constructor-arg value="pcdlc" />
+	</bean>
+	<!-- 应用mc -->
+	
+	<bean id="sqlPageBuilder4MySQL" class="org.gelivable.dao.SqlPageBuilder4MySQL" />
+	<bean id="sqlPageBuilder4Oracle" class="org.gelivable.dao.SqlPageBuilder4Oracle" />
+
+	<bean id="cacheProvider" class="org.gelivable.web.EnvCacheProvider" />
+	<bean id="memCachedProvider" class="org.gelivable.web.MemCachedProvider"
+		p:memCachedClient-ref="memCachedClient4Geli" />
+
+	<bean id="geliDao" class="org.gelivable.dao.GeliDao"
+		p:sqlPageBuilder-ref="sqlPageBuilder4MySQL" p:simpleJdbcTemplate-ref="simpleJdbcTemplate"
+		p:idGenerator-ref="idGenerator" p:cacheFirstLevel-ref="cacheProvider"
+		p:cacheListener-ref="cacheProvider" 
+		p:cacheSecondLevel-ref="memCachedProvider"
+		p:orm-ref="geliOrm" />
+   	
+	<bean class="org.gelivable.dao.GeliUtils" p:dao-ref="geliDao" />
+
+	<!-- Service注入 -->
+	<context:component-scan base-package="cn.pconline.pcdlc.service">
+		<context:include-filter type="regex" expression=".*" />
+		<!-- <context:exclude-filter type="regex" expression=".Abstract*" /> -->
+	</context:component-scan>
+	<!-- dao注入 -->
+	<context:component-scan base-package="cn.pconline.pcdlc.dao">
+		<context:include-filter type="regex" expression=".*" />
+		<!-- <context:exclude-filter type="regex" expression=".Abstract*" /> -->
+	</context:component-scan>
+	<!-- 手机资源中心 Service注入 -->
+	<context:component-scan base-package="cn.pconline.rescenter.service">
+		<context:include-filter type="regex" expression=".*" />
+	</context:component-scan>
+	
+
+	<!-- oracle configuration 
+	<import resource="oracleContext.xml" />
+	-->
+	<!-- 配置事务管理 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" 
+		p:dataSource-ref="dataSource" /> -->
+	<!-- 启动spring注解功能 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<!-- <tx:advice id="txAdvice" transaction-manager="transactionManager"> 
+		<tx:attributes> <tx:method name="list*" read-only="true" propagation="NOT_SUPPORTED" 
+		/> <tx:method name="get*" read-only="true" propagation="NOT_SUPPORTED" /> 
+		<tx:method name="find*" read-only="true" propagation="NOT_SUPPORTED" /> <tx:method 
+		name="run*" read-only="true" propagation="NOT_SUPPORTED" /> <tx:method name="query*" 
+		read-only="true" propagation="NOT_SUPPORTED" /> <tx:method name="page*" read-only="true" 
+		propagation="NOT_SUPPORTED" /> <tx:method name="*" read-only="false" propagation="REQUIRED" 
+		/> </tx:attributes> </tx:advice> -->
+	<!-- execution(* cn.com.pconline.pcdlc.service.*.*(..)) || execution(* org.gelivable.dao.GeliDao.*(..)) 
+		|| execution(* cn.pconline.pcdlc.old.convert.*.*(..)) org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate.batchUpdate 
+		<aop:pointcut id="dlService" expression="execution(* cn.pconline.pcdlc.old.convert.*.*(..))" 
+		/> <aop:advisor advice-ref="txAdvice" pointcut-ref="dlService" /> <aop:pointcut 
+		id="dlService" expression="execution(* cn.pconline.pcdlc.old.convert.DailyCountConvert.converToMySql(..))" 
+		/> <aop:advisor advice-ref="txAdvice" pointcut-ref="dlService" /> <aop:pointcut 
+		id="noTxServiceOperation" expression="execution(* x.y.service.ddl.DefaultDdlManager.*(..))"/> 
+		<aop:advisor advice-ref="noTxAdvice" pointcut-ref="noTxServiceOperation"/> 
+		<aop:advisor pointcut="within(cn.pconline.pcdlc.old.convert..*)" advice-ref="txAdvice"/> 
+		<aop:pointcut id="noTxServiceOperation" expression="execution(* cn.pconline.pcdlc.old.convert.AbstractEntityDbConvert.*(..))" 
+		/> <aop:advisor advice-ref="noTxAdvice" pointcut-ref="noTxServiceOperation" 
+		/> -->
+	<!-- <aop:config> <aop:pointcut id="dlService" expression="execution(* cn.pconline.pcdlc.old.convert.*.*(..))" 
+		/> <aop:advisor advice-ref="txAdvice" pointcut-ref="dlService" /> </aop:config> -->
+
+	<!-- 注解注入功能 -->
+	<context:annotation-config />
+
+	<!-- 权限验证 -->
+	<bean id="authFacade" class="cn.pconline.pcdlc.auth.AuthFacade"
+		p:application-ref="appName" />
+		
+	<!-- 手机资源权限验证 -->
+	<bean id="resAuthFacade" class="cn.pconline.pcdlc.auth.ResAuthFacade"/>
+ 
+    <bean id="sysConfig" class="cn.pconline.pcdlc.util.SysConfig"
+    	  p:authServer="${sys.authserver}"
+          p:authUri="${sys.authuri}"
+          p:fileRoot="${sys.file_root}"
+          p:savecopy="${sys.savecopy}"
+          p:syncDir="${sys.sync_dir}"
+          p:linkRegx="${linkregx}" p:defaultLink1="${defaultlink_1}"
+          p:defaultLink2="${defaultlink_2}" p:defaultLink4="${defaultlink_4}"
+          p:defaultLink5="${defaultlink_5}" p:defaultLink6="${defaultlink_6}"
+          p:defaultLink1481="${defaultlink_1481}"
+          p:defaultLink1520="${defaultlink_1520}"
+          p:defaultLink1706="${defaultlink_1706}"
+          p:defaultLink1942="${defaultlink_1942}"
+          p:xixiUploadUrl="${sys.xixi_upload_url}"
+          p:sqsUrl="${sqs.url}"
+          p:domain="${domain}"
+          p:dlc2domain="${dlc2domain}"
+          p:systemRoot="${system.root}"
+          p:apkInfoUrl="${system.getApkInfo.url}"
+          p:dldomain="${dldomain}"
+          p:wapdomain="${wapdomain}"
+          p:dlappdomain="${dlappdomain}"
+          p:publishUrl="${sys.publish_url}"
+          p:smUrl="${sm_url}"
+          p:picServer="${pic_server}"
+          p:upcServer="${upc_server}"
+          p:upcServerJsp="${upc_server_jsp}"
+          p:app43Url="${app43_url}"
+          p:whiteList="${dlwhitelist}"
+          p:nginxMcServer="${nginx_mc_server}"
+          p:nginxMcServerPort="${nginx_mc_server_port}"
+          p:nginxMcSetUri="${nginx_mc_set_uri}"
+          p:nginxMcGetUri="${nginx_mc_get_uri}"
+          p:nginxMcDelUri="${nginx_mc_del_uri}"
+          p:nginxMcSetErrUri="${nginx_mc_err_set_uri}"
+          p:clearLinkCacheServers="${clear_link_cache_servers}"
+          p:batchsize="${batchsize}"
+          p:path0="${path0}"
+          p:path1="${path1}"
+          p:counterurl="${counterurl}"
+          p:ksUrl="${ks.url}"
+          p:ksIndexName="${ks.indexName}"
+          p:ksHttpIndexWriter="${ks.httpIndexWriter}"
+          p:ksInterval="${ks.interval}"
+          p:ksKey="${ks.key}"
+          p:mysqlConnectionUrl="${mysql.connectionUrl}"
+          p:mysqlUser="${mysql.user}"
+          p:downloadWapdomain="${downloadWapdomain}"
+          p:mysqlPassword="${mysql.password}"
+          p:pcdlcEnv="${pcdlc.env}"
+          p:backgroupDomain="${backgroupDomain}"
+          p:ksReloadIndex="${ks.reoladIndex}"
+          p:baiduDownLoadSyncUrl="${baidu.downLoadSync.url}"
+          p:baiduDownLoadSyncKey="${baidu.downLoadSync.key}"
+          p:baiduDownLoadSyncSupplyId="${baidu.downLoadSync.supply_id}"
+          p:beiAnPostUrl="${beian.posturl}"
+          p:beiAnPassword="${beian.passpord}"
+          p:beiAnPostUrlToken="${beian.token}"
+          p:beiAnMarketMd5="${beian.market.md5}"
+          p:riyuetongxingWebId="${riyuetongxing.web_id}"
+          p:riyuetongxingWebKey="${riyuetongxing.web_key}"
+          p:riyuetongxingPvLogPath="${riyuetongxing.counter.pv.log.path}"
+          p:riyuetongxingDlLogPath="${riyuetongxing.counter.dl.log.path}"
+          p:riyuetongxingPvLogBatchSize="${riyuetongxing.counter.pv.log.batchsize}"
+          p:riyuetongxingDlLogBatchSize="${riyuetongxing.counter.dl.log.batchsize}"
+          p:proxyHost="${proxy.host}"
+          p:proxyPort="${proxy.port}"
+          p:syncBaiduALaDingSH="${sys.sync_baidu_alading_sh}" 
+          p:tongguanExcelPath="${tongguan.excel.path}"
+          p:sessionId="${upc.cookie.sessionId}"
+          p:loginUrl="${sys.loginUrl}"
+          p:apkUploadUrl="${sys.apk_upload_url}"
+          p:passportCookieName="${passport.cookie.session}"
+          p:developerPicUrl="${sys.developer_pic_url}"
+          p:personalCenter="${personalCenter}"
+          p:xzInterface="${xz.interface}"
+          p:featureRoot="${dl.feature.root}"
+          p:qfSwitch="1"
+          p:spiderRoot="${dl.new.spider.root}"
+          p:mailHost="${mail.host}"
+          p:mailFrom="${mail.from}"
+          p:mailCharSet="${mail.charset}"
+          />
+		
+	<!-- R SimpleHttpTemplate config start -->
+	<jee:jndi-lookup id="route" jndi-name="jca/pc_route" />
+
+	<bean id="simpleHttpTemplate" class="cn.pconline.r.client.SimpleHttpTemplate"
+		init-method="init"
+		destroy-method="shutdown"
+		p:clientUri="http://r.pconline.com.cn"
+		p:connectTimeout="10000"
+		p:readTimeout="60000"
+		p:maxTotalConnections="300"
+		p:maxPerRoute="3"
+		p:route-ref="route"/>
+	<!-- R SimpleHttpTemplate config end -->
+	
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	 
+	<bean class="cn.pconline.pcdlc.web.aop.AopClearObjectCache"></bean>
+	
+	<bean class="cn.pconline.pcdlc.web.aop.AopLogger"></bean>
+	<bean class="cn.pconline.pcdlc.task.HaboTask"></bean>
+	
+    <bean id="pcdlcIndexTask" class="cn.pconline.pcdlc.task.ks.PcdlcIndexTask" init-method="init"  p:sysConfig-ref="sysConfig"/>
+    
+    <!-- 后台部署 文件上传 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" p:defaultEncoding="GBK">
+     <!-- 以字节为单位的最大上传文件的大小 -->
+    	<property name="maxUploadSize" value="3145728" /> <!-- 3M -->
+    </bean> 
+    
+   	 <bean class="cn.pconline.pcdlc.util.SystemNoticeUtils"/> 
+    
+    
+    <!-- 日月同行下载器统计 -->
+    <!-- 
+    <bean id="riyuePvCounter" class="cn.pconline.pcdlc.counter.log.OtherCounterWriter" >
+    	<constructor-arg index="0" value="riyuetongxingPvLogCounter"/>
+    	<constructor-arg index="1" type="int" value="${riyuetongxing.counter.pv.log.batchsize}"/>
+    	<constructor-arg index="2" value="${riyuetongxing.counter.pv.log.path}"/>
+    </bean>
+    <bean id="riyueDlCounter" class="cn.pconline.pcdlc.counter.log.OtherCounterWriter" >
+    	<constructor-arg index="0" value="riyuetongxingPlLogCounter"/>
+    	<constructor-arg index="1" type="int" value="${riyuetongxing.counter.dl.log.batchsize}"/>
+    	<constructor-arg index="2" value="${riyuetongxing.counter.dl.log.path}"/>
+    </bean>
+     -->
+   
+    
+    <import resource="passportContext.xml"/>
+    <import resource="classpath:pcdlc-rabbitmq.xml"/>
+    
+</beans>

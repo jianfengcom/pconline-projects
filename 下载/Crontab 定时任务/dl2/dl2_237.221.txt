@@ -1,0 +1,13 @@
+22---### clear the cache of dlcounter every day
+23---0 0 * * * /data/sh/cls_cache.sh > /dev/null  2>&1
+24---
+25---2 * * * * chown -R robin.robin /data/html/pcdlc/shtml/ > /dev/null 2>&1
+26---
+27---6 1 * * * /data/resin-pro-3.0.14/bin/deljdo.sh > /dev/null 2>&1
+28---
+29---### SVN
+30---0 * * * * /data/PRG/svn_commit_conf.sh  > /dev/null 2>&1
+35---
+36---0 1 * * * crontab -u resin -l > /home/huangzhong/resin.cron
+37---1 1 * * * crontab -l > /home/huangzhong/root.cron
+38---0 0 * * 5 find /data/BAK/pconline-dlc2/ -name "*.tgz" -mtime  +20|xargs rm -rf > /dev/null 2>&1
